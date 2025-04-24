@@ -5,23 +5,27 @@ package ru.almidev.bookstore.models;
  */
 public class BookCatalog {
 
-    private int bookId;
+    private Integer bookId;
     private String title;
     private BookAuthor author;
     private double price;
 
-    public BookCatalog(int bookId, String title, BookAuthor author, double price) {
+    public BookCatalog(Integer bookId, String title, BookAuthor author, double price) {
         this.bookId = bookId;
         this.title = title;
         this.author = author;
         this.price = price;
     }
 
-    public int getBookId() {
+    public BookCatalog() {
+
+    }
+
+    public Integer getBookId() {
         return bookId;
     }
 
-    public void setBookId(int bookId) {
+    public void setBookId(Integer bookId) {
         this.bookId = bookId;
     }
 

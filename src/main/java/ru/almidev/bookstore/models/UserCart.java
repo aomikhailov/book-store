@@ -5,23 +5,27 @@ package ru.almidev.bookstore.models;
  */
 public class UserCart {
 
-    private int itemId;
+    private Integer itemId;
     private AppUser user;
     private BookCatalog book;
-    private int bookQuantity;
+    private Integer bookQuantity;
 
-    public UserCart(int itemId, AppUser user, BookCatalog book, int bookQuantity) {
+    public UserCart(Integer itemId, AppUser user, BookCatalog book, Integer bookQuantity) {
         this.itemId = itemId;
         this.user = user;
         this.book = book;
         this.bookQuantity = bookQuantity;
     }
 
-    public int getItemId() {
+    public UserCart() {
+
+    }
+
+    public Integer getItemId() {
         return itemId;
     }
 
-    public void setItemId(int itemId) {
+    public void setItemId(Integer itemId) {
         this.itemId = itemId;
     }
 
@@ -41,11 +45,11 @@ public class UserCart {
         this.book = book;
     }
 
-    public int getBookQuantity() {
+    public Integer getBookQuantity() {
         return bookQuantity;
     }
 
-    public void setBookQuantity(int bookQuantity) {
+    public void setBookQuantity(Integer bookQuantity) {
         this.bookQuantity = bookQuantity;
     }
 

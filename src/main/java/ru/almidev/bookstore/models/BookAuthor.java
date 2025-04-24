@@ -4,7 +4,7 @@ package ru.almidev.bookstore.models;
  * Класс представляет сущность автора книги.
  */
 public class BookAuthor {
-    private int authorId;
+    private Integer authorId;
     private String lastName;
     private String firstName;
     private String middleName;
@@ -13,7 +13,7 @@ public class BookAuthor {
     public BookAuthor() {
     }
 
-    public BookAuthor(int authorId, String lastName, String firstName, String middleName, java.sql.Date birthDate) {
+    public BookAuthor(Integer authorId, String lastName, String firstName, String middleName, java.sql.Date birthDate) {
         this.authorId = authorId;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -21,11 +21,11 @@ public class BookAuthor {
         this.birthDate = birthDate;
     }
 
-    public int getAuthorId() {
+    public Integer getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(int authorId) {
+    public void setAuthorId(Integer authorId) {
         this.authorId = authorId;
     }
 
