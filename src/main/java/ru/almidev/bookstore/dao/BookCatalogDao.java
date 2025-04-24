@@ -74,7 +74,7 @@ public class BookCatalogDao extends BaseDao<BookCatalog, Integer> {
         BookCatalog bookCatalog = new BookCatalog();
         bookCatalog.setBookId((Integer) row.get("book_id"));
         bookCatalog.setTitle((String) row.get("title"));
-        bookCatalog.setPrice((Double) row.get("price"));
+        bookCatalog.setPrice( row.get("price") != null ? Double.parseDouble(row.get("price").toString()) : 0.0);
         BookAuthor bookAuthor = new BookAuthorDao().findById((Integer) row.get("author_id"));
         bookCatalog.setAuthor(bookAuthor);
         return bookCatalog;

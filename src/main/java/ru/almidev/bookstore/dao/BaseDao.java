@@ -1,5 +1,4 @@
 package ru.almidev.bookstore.dao;
-
 import ru.almidev.bookstore.helpers.DatabaseHelper;
 
 /**

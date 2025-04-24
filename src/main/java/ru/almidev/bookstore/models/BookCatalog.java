@@ -8,9 +8,9 @@ public class BookCatalog {
     private Integer bookId;
     private String title;
     private BookAuthor author;
-    private double price;
+    private Double price;
 
-    public BookCatalog(Integer bookId, String title, BookAuthor author, double price) {
+    public BookCatalog(Integer bookId, String title, BookAuthor author, Double price) {
         this.bookId = bookId;
         this.title = title;
         this.author = author;
@@ -45,11 +45,11 @@ public class BookCatalog {
         this.author = author;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

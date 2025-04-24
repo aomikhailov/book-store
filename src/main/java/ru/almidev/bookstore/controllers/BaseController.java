@@ -22,7 +22,7 @@ public class BaseController extends HttpServlet {
         defaultAttributes = new HashMap<>();
         defaultAttributes.put("pageTitle", Config.getAppName());
         defaultAttributes.put("pageHead", Config.getAppName());
-        defaultAttributes.put("contentTemplate", Config.getViewPath().concat("/default.jsp"));
+        defaultAttributes.put("contentTemplate", Config.getViewPath().concat("default.jsp"));
     }
 
     /**

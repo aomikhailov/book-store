@@ -20,16 +20,22 @@ public class Config {
         return dotenv.get("APP_NAME");
     }
 
+    public static String getDbDriver() {
+        return dotenv.get("DB_DRIVER");
+    }
+
     public static String getDbUrl() {
         return dotenv.get("DB_URL");
     }
 
     public static String getDbUser() {
-        return dotenv.get("DB_USER");
+       // return dotenv.get("DB_USER");
+        return "test";
     }
 
     public static String getDbPassword() {
-        return dotenv.get("DB_PASSWORD");
+        // return dotenv.get("DB_PASSWORD");
+        return "test";
     }
 
     public static String getViewPath() {

@@ -36,8 +36,9 @@ public class DatabaseHelper {
 
         static {
             try {
+                Class.forName(Config.getDbDriver());
                 INSTANCE = new DatabaseHelper();
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 throw new ExceptionInInitializerError("Ошибка создания экземпляра DatabaseHelper: " + e.getMessage());
             }
         }
@@ -74,6 +75,14 @@ public class DatabaseHelper {
         }
     }
 
+    /**
+     * Выполняет SQL-запрос с заданными параметрами и возвращает результаты в виде списка строк.
+     *
+     * @param query SQL-запрос для выполнения.
+     * @param parameters переменные для подстановки в SQL-запрос.
+     * @return Список, где каждая строка представлена в виде карты значений (название столбца в нижнем регистре и его значение).
+     * @throws SQLException если возникает ошибка при выполнении запроса или работе с базой данных.
+     */
     public List<Map<String, Object>> executeQuery(String query, Object... parameters) throws SQLException {
         validateConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -89,7 +98,7 @@ public class DatabaseHelper {
                 while (resultSet.next()) {
                     Map<String, Object> row = new HashMap<>();
                     for (int i = 1; i <= columnCount; i++) {
-                        row.put(metaData.getColumnName(i), resultSet.getObject(i));
+                        row.put(metaData.getColumnName(i).toLowerCase(), resultSet.getObject(i));
                     }
                     results.add(row);
                 }

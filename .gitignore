@@ -51,10 +51,3 @@ desktop.ini
 /test-results/
 /reports/
 /main/test
-
-# Папка БД H2
-/data/*
-!/data/
-!/data/.gitkeep
-
-

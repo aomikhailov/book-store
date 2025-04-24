@@ -5,18 +5,6 @@
 <jsp:useBean id="pageHead" scope="request" type="java.lang.String"/>
 <jsp:useBean id="contentTemplate" scope="request" type="java.lang.String"/>
 
-<c:if test="${empty pageTitle}">
-    <c:set var="pageTitle" value="Заголовок веб-страницы по умолчанию"/>
-</c:if>
-
-<c:if test="${empty pageHead}">
-    <c:set var="pageHead" value="Заголовок страницы по умолчанию"/>
-</c:if>
-
-<c:if test="${empty contentTemplate}">
-    <c:set var="contentTemplate" value="/WEB-INF/views/default.jsp"/>
-</c:if>
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
