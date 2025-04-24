@@ -1,13 +1,13 @@
-﻿package ru.almidev.bookstore.controllers;
+package ru.almidev.bookstore.controllers;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import ru.almidev.bookstore.config.Config;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import static ru.almidev.bookstore.config.Config.VIEW_PATH;
 
 public class BaseController extends HttpServlet {
 
@@ -22,7 +22,7 @@ public class BaseController extends HttpServlet {
 
     protected void renderView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         setMissingDefaultAttributes(req);
-        req.getRequestDispatcher(VIEW_PATH + "base.jsp").forward(req, resp);
+        req.getRequestDispatcher(Config.getViewPath() + "base.jsp").forward(req, resp);
     }
 
     private void setMissingDefaultAttributes (HttpServletRequest req) {

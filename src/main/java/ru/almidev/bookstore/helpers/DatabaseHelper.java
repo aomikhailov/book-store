@@ -24,7 +24,7 @@ public class DatabaseHelper {
 
     // Приватный конструктор для инициализации соединения
     private DatabaseHelper() throws SQLException {
-        connection = DriverManager.getConnection(Config.DB_URL, Config.DB_USER, Config.DB_PASSWORD);
+        connection = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPassword());
     }
 
     /**

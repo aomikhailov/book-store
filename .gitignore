@@ -22,10 +22,9 @@ desktop.ini
 *.state
 
 # Конфигурационные файлы с чувствительными данными
-/.env
-/.env.*
-/src/main/java/ru/almidev/bookstore/config/Config.java
-!.env.sample
+.env
+.env.*
+!.env.example
 
 # Папки сборки и временные файлы
 /target/
