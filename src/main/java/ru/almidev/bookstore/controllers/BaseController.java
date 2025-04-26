@@ -21,7 +21,7 @@ import java.util.Map;
 public class BaseController extends HttpServlet {
 
     private final Map<String, Object> defaultAttributes;
-   // protected final BookstoreService bookstoreService;
+    protected final BookstoreService bookstoreService;
 
     /**
      * Конструктор базового контроллера. Инициализирует карту атрибутов по умолчанию,
@@ -34,7 +34,7 @@ public class BaseController extends HttpServlet {
         defaultAttributes.put(LOGGED_USER_SESSION, new UserSession());
         defaultAttributes.put(UNLOGGED_USERS_SESSIONS, Collections.emptyList());
         defaultAttributes.put(CONTENT_TEMPLATE, Config.getViewPath().concat(DEFAULT_JSP));
-       // bookstoreService = new BookstoreService();
+        bookstoreService = new BookstoreService();
     }
 
     /**

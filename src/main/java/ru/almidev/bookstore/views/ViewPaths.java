@@ -13,6 +13,8 @@ public class ViewPaths {
     public static final String DEFAULT_JSP = Config.getViewPath().concat("default.jsp");
     public static final String INDEX_JSP = Config.getViewPath().concat("index.jsp");
     public static final String ERROR_JSP = Config.getViewPath().concat("error.jsp");
+    public static final String AUTHORS_JSP = Config.getViewPath().concat("authors.jsp");
+    public static final String AUTHOR_BOOKS_JSP = Config.getViewPath().concat("authorBooks.jsp");
 
     private ViewPaths() {
 

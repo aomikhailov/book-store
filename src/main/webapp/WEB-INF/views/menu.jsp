@@ -8,7 +8,7 @@
     <div id="navigation">
         <strong>Навигация:</strong>
         <a href="${pageContext.request.contextPath}/">Главная</a> |
-        <a href="${pageContext.request.contextPath}/">Авторы</a> |
+        <a href="${pageContext.request.contextPath}/authors">Авторы</a> |
         <a href="${pageContext.request.contextPath}/">Корзина</a>
     </div>
     <div id="session">
@@ -33,6 +33,5 @@
                 </c:forEach>
             </c:when>
         </c:choose>
-
     </div>
 </div>
