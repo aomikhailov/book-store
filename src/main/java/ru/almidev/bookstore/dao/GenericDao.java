@@ -15,4 +15,5 @@ public interface GenericDao<T, ID> {
     void save(T entity) throws SQLException;
     void update(T entity) throws SQLException;
     void deleteById(ID id) throws SQLException;
+    String getTableName();
 }

@@ -15,10 +15,22 @@ import java.util.Map;
  */
 public class UserSessionDao extends BaseDao<UserSession, Integer> {
 
+    public final String TABLE_NAME = "user_session";
+
     @Override
     public UserSession findById(Integer id) throws SQLException {
-        String query = "SELECT * FROM user_session WHERE session_id = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE session_id = ?";
         List<Map<String, Object>> results = databaseHelper.executeQuery(query, id);
+
+        if (!results.isEmpty()) {
+            return mapRowToUserSession(results.getFirst());
+        }
+        return null;
+    }
+
+    public UserSession findBySessionToken(String sessionToken) throws SQLException {
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE session_token = ?";
+        List<Map<String, Object>> results = databaseHelper.executeQuery(query, sessionToken);
 
         if (!results.isEmpty()) {
             return mapRowToUserSession(results.getFirst());
@@ -28,7 +40,7 @@ public class UserSessionDao extends BaseDao<UserSession, Integer> {
 
     @Override
     public List<UserSession> findAll() throws SQLException {
-        String query = "SELECT * FROM user_session";
+        String query = "SELECT * FROM " + TABLE_NAME ;
         List<Map<String, Object>> results = databaseHelper.executeQuery(query);
 
         List<UserSession> sessions = new ArrayList<>();
@@ -40,21 +52,24 @@ public class UserSessionDao extends BaseDao<UserSession, Integer> {
 
     @Override
     public void save(UserSession entity) throws SQLException {
-        String query = "INSERT INTO user_session (user_id, session_token, created_on, expires_on) VALUES (?, ?, ?, ?)";
-        databaseHelper.executeUpdate(query, entity.getUser().getUserId(), entity.getSessionToken(),
+        if (entity.getSessionId() == null) {
+            entity.setSessionId(getNextAutoIncrementValue(TABLE_NAME));
+        }
+        String query = "INSERT INTO " + TABLE_NAME + " (session_id, user_id, session_token, created_on, expires_on) VALUES (?, ?, ?, ?, ?)";
+        databaseHelper.executeUpdate(query, entity.getSessionId(), entity.getUser().getUserId(), entity.getSessionToken(),
                 entity.getCreatedOn(), entity.getExpiresOn());
     }
 
     @Override
     public void update(UserSession entity) throws SQLException {
-        String query = "UPDATE user_session SET user_id = ?, session_token = ?, created_on = ?, expires_on = ? WHERE session_id = ?";
+        String query = "UPDATE " + TABLE_NAME + " SET user_id = ?, session_token = ?, created_on = ?, expires_on = ? WHERE session_id = ?";
         databaseHelper.executeUpdate(query, entity.getUser().getUserId(), entity.getSessionToken(),
                 entity.getCreatedOn(), entity.getExpiresOn(), entity.getSessionId());
     }
 
     @Override
     public void deleteById(Integer id) throws SQLException {
-        String query = "DELETE FROM user_session WHERE session_id = ?";
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE session_id = ?";
         databaseHelper.executeUpdate(query, id);
     }
 
@@ -67,5 +82,10 @@ public class UserSessionDao extends BaseDao<UserSession, Integer> {
         AppUser user = new AppUserDao().findById((Integer) row.get("user_id"));
         session.setUser(user);
         return session;
+    }
+
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
     }
 }

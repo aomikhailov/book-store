@@ -14,9 +14,11 @@ import java.util.Map;
  */
 public class BookCatalogDao extends BaseDao<BookCatalog, Integer> {
 
+    public final String TABLE_NAME = "book_catalog";
+
     @Override
     public BookCatalog findById(Integer id) throws SQLException {
-        String query = "SELECT * FROM book_catalog WHERE book_id = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE book_id = ?";
         List<Map<String, Object>> results = databaseHelper.executeQuery(query, id);
 
         if (!results.isEmpty()) {
@@ -27,7 +29,7 @@ public class BookCatalogDao extends BaseDao<BookCatalog, Integer> {
 
     @Override
     public List<BookCatalog> findAll() throws SQLException {
-        String query = "SELECT * FROM book_catalog";
+        String query = "SELECT * FROM " + TABLE_NAME;
         List<Map<String, Object>> results = databaseHelper.executeQuery(query);
 
         List<BookCatalog> books = new ArrayList<>();
@@ -38,7 +40,7 @@ public class BookCatalogDao extends BaseDao<BookCatalog, Integer> {
     }
 
     public List<BookCatalog> findAllByBookAuthor(Integer authorId) throws SQLException {
-        String query = "SELECT * FROM book_catalog WHERE author_id = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE author_id = ?";
         List<Map<String, Object>> results = databaseHelper.executeQuery(query, authorId);
 
         List<BookCatalog> books = new ArrayList<>();
@@ -54,19 +56,22 @@ public class BookCatalogDao extends BaseDao<BookCatalog, Integer> {
 
     @Override
     public void save(BookCatalog entity) throws SQLException {
-        String query = "INSERT INTO book_catalog (title, author_id, price) VALUES (?, ?, ?)";
-        databaseHelper.executeUpdate(query, entity.getTitle(), entity.getAuthor().getAuthorId(), entity.getPrice());
+        if (entity.getBookId() == null) {
+            entity.setBookId(getNextAutoIncrementValue(TABLE_NAME));
+        }
+        String query = "INSERT INTO " + TABLE_NAME + " (book_id, title, author_id, price) VALUES (?, ?, ?, ?)";
+        databaseHelper.executeUpdate(query, entity.getBookId(), entity.getTitle(), entity.getAuthor().getAuthorId(), entity.getPrice());
     }
 
     @Override
     public void update(BookCatalog entity) throws SQLException {
-        String query = "UPDATE book_catalog SET title = ?, author_id = ?, price = ? WHERE book_id = ?";
+        String query = "UPDATE " + TABLE_NAME + " SET title = ?, author_id = ?, price = ? WHERE book_id = ?";
         databaseHelper.executeUpdate(query, entity.getTitle(), entity.getAuthor().getAuthorId(), entity.getPrice(), entity.getBookId());
     }
 
     @Override
     public void deleteById(Integer id) throws SQLException {
-        String query = "DELETE FROM book_catalog WHERE book_id = ?";
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE book_id = ?";
         databaseHelper.executeUpdate(query, id);
     }
 
@@ -74,9 +79,14 @@ public class BookCatalogDao extends BaseDao<BookCatalog, Integer> {
         BookCatalog bookCatalog = new BookCatalog();
         bookCatalog.setBookId((Integer) row.get("book_id"));
         bookCatalog.setTitle((String) row.get("title"));
-        bookCatalog.setPrice( row.get("price") != null ? Double.parseDouble(row.get("price").toString()) : 0.0);
+        bookCatalog.setPrice(row.get("price") != null ? Double.parseDouble(row.get("price").toString()) : 0.0);
         BookAuthor bookAuthor = new BookAuthorDao().findById((Integer) row.get("author_id"));
         bookCatalog.setAuthor(bookAuthor);
         return bookCatalog;
+    }
+
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
     }
 }

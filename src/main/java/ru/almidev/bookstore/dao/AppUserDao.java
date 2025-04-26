@@ -14,9 +14,11 @@ import java.util.Map;
  */
 public class AppUserDao extends BaseDao<AppUser, Integer> {
 
+    public final String TABLE_NAME = "app_user";
+
     @Override
     public AppUser findById(Integer id) throws SQLException {
-        String query = "SELECT * FROM app_user WHERE user_id = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE user_id = ?";
         List<Map<String, Object>> results = databaseHelper.executeQuery(query, id);
 
         if (!results.isEmpty()) {
@@ -39,19 +41,22 @@ public class AppUserDao extends BaseDao<AppUser, Integer> {
 
     @Override
     public void save(AppUser entity) throws SQLException {
-        String query = "INSERT INTO app_user (full_name, created_on) VALUES (?, ?)";
+        if (entity.getUserId() == null) {
+            entity.setUserId(getNextAutoIncrementValue(TABLE_NAME));
+        }
+        String query = "INSERT INTO " + TABLE_NAME + " (user_id, full_name, created_on) VALUES (?, ?, ?)";
         databaseHelper.executeUpdate(query, entity.getFullName(), entity.getCreatedOn());
     }
 
     @Override
     public void update(AppUser entity) throws SQLException {
-        String query = "UPDATE app_user SET full_name = ?, created_on = ? WHERE user_id = ?";
+        String query = "UPDATE " + TABLE_NAME + " SET full_name = ?, created_on = ? WHERE user_id = ?";
         databaseHelper.executeUpdate(query, entity.getFullName(), entity.getCreatedOn(), entity.getUserId());
     }
 
     @Override
     public void deleteById(Integer id) throws SQLException {
-        String query = "DELETE FROM app_user WHERE user_id = ?";
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE user_id = ?";
         databaseHelper.executeUpdate(query, id);
     }
 
@@ -61,5 +66,10 @@ public class AppUserDao extends BaseDao<AppUser, Integer> {
         user.setFullName((String) row.get("full_name"));
         user.setCreatedOn(((Timestamp) row.get("created_on")).toLocalDateTime());
         return user;
+    }
+
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
     }
 }
