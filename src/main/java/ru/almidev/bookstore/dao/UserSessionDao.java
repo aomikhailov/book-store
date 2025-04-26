@@ -15,11 +15,12 @@ import java.util.Map;
  */
 public class UserSessionDao extends BaseDao<UserSession, Integer> {
 
-    public final String TABLE_NAME = "user_session";
+    private final String TABLE_NAME = "user_session";
+    private final String ID_FIELD_NAME = "session_id";
 
     @Override
     public UserSession findById(Integer id) throws SQLException {
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE session_id = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + ID_FIELD_NAME + " = ?";
         List<Map<String, Object>> results = databaseHelper.executeQuery(query, id);
 
         if (!results.isEmpty()) {
@@ -31,6 +32,16 @@ public class UserSessionDao extends BaseDao<UserSession, Integer> {
     public UserSession findBySessionToken(String sessionToken) throws SQLException {
         String query = "SELECT * FROM " + TABLE_NAME + " WHERE session_token = ?";
         List<Map<String, Object>> results = databaseHelper.executeQuery(query, sessionToken);
+
+        if (!results.isEmpty()) {
+            return mapRowToUserSession(results.getFirst());
+        }
+        return null;
+    }
+
+    public UserSession findByUserId(Integer userId) throws SQLException {
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE user_id = ?";
+        List<Map<String, Object>> results = databaseHelper.executeQuery(query, userId);
 
         if (!results.isEmpty()) {
             return mapRowToUserSession(results.getFirst());
@@ -53,7 +64,7 @@ public class UserSessionDao extends BaseDao<UserSession, Integer> {
     @Override
     public void save(UserSession entity) throws SQLException {
         if (entity.getSessionId() == null) {
-            entity.setSessionId(getNextAutoIncrementValue(TABLE_NAME));
+            entity.setSessionId(getNextAutoIncrementValue());
         }
         String query = "INSERT INTO " + TABLE_NAME + " (session_id, user_id, session_token, created_on, expires_on) VALUES (?, ?, ?, ?, ?)";
         databaseHelper.executeUpdate(query, entity.getSessionId(), entity.getUser().getUserId(), entity.getSessionToken(),
@@ -62,14 +73,14 @@ public class UserSessionDao extends BaseDao<UserSession, Integer> {
 
     @Override
     public void update(UserSession entity) throws SQLException {
-        String query = "UPDATE " + TABLE_NAME + " SET user_id = ?, session_token = ?, created_on = ?, expires_on = ? WHERE session_id = ?";
+        String query = "UPDATE " + TABLE_NAME + " SET user_id = ?, session_token = ?, created_on = ?, expires_on = ? WHERE " + ID_FIELD_NAME + " = ?";
         databaseHelper.executeUpdate(query, entity.getUser().getUserId(), entity.getSessionToken(),
                 entity.getCreatedOn(), entity.getExpiresOn(), entity.getSessionId());
     }
 
     @Override
     public void deleteById(Integer id) throws SQLException {
-        String query = "DELETE FROM " + TABLE_NAME + " WHERE session_id = ?";
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE " + ID_FIELD_NAME + " = ?";
         databaseHelper.executeUpdate(query, id);
     }
 
@@ -87,5 +98,10 @@ public class UserSessionDao extends BaseDao<UserSession, Integer> {
     @Override
     public String getTableName() {
         return TABLE_NAME;
+    }
+
+    @Override
+    public String getIdFieldName() {
+        return ID_FIELD_NAME;
     }
 }

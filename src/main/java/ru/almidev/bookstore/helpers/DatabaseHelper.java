@@ -20,35 +20,30 @@ import java.util.Map;
  */
 public class DatabaseHelper {
 
-    private final Connection connection;
+    private Connection connection;
 
-    // Приватный конструктор для инициализации соединения
-    private DatabaseHelper() throws SQLException {
-        connection = DriverManager.getConnection(Config.getDbUrl(), Config.getDbUser(), Config.getDbPassword());
+    // Приватный конструктор
+    private DatabaseHelper() {
+        // Конструктор ничего не открывает — соединение устанавливается только при необходимости
     }
 
-    /**
-     * Реализация паттерна Singleton с использованием метода Билла Пью.
-     * Вложенный статический класс обеспечивает ленивую загрузку.
-     */
-    private static class DatabaseHelperHolder {
-        private static final DatabaseHelper INSTANCE;
+    public static DatabaseHelper getInstance() {
+        return DatabaseHelperHolder.INSTANCE;
+    }
 
-        static {
-            try {
-                Class.forName(Config.getDbDriver());
-                INSTANCE = new DatabaseHelper();
-            } catch (SQLException | ClassNotFoundException e) {
-                throw new ExceptionInInitializerError("Ошибка создания экземпляра DatabaseHelper: " + e.getMessage());
-            }
+    private void ensureConnection() throws SQLException {
+        if (connection == null || connection.isClosed()) {
+            connection = DriverManager.getConnection(
+                    Config.getDbUrl(),
+                    Config.getDbUser(),
+                    Config.getDbPassword()
+            );
         }
     }
 
-    /**
-     * Возвращает единственный экземпляр класса {@code DatabaseHelper}.
-     */
-    public static DatabaseHelper getInstance() {
-        return DatabaseHelperHolder.INSTANCE;
+    public Connection getConnection() throws SQLException {
+        ensureConnection();
+        return connection;
     }
 
     public void closeConnection() {
@@ -66,28 +61,20 @@ public class DatabaseHelper {
     }
 
     public void executeUpdate(String query, Object... parameters) throws SQLException {
-        validateConnection();
+        ensureConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             for (int i = 0; i < parameters.length; i++) {
-                preparedStatement.setObject(i + 1, parameters[i]); // Индексы в SQL начинаются с 1
+                preparedStatement.setObject(i + 1, parameters[i]); // Индексация с 1 в SQL
             }
             preparedStatement.executeUpdate();
         }
     }
 
-    /**
-     * Выполняет SQL-запрос с заданными параметрами и возвращает результаты в виде списка строк.
-     *
-     * @param query SQL-запрос для выполнения.
-     * @param parameters переменные для подстановки в SQL-запрос.
-     * @return Список, где каждая строка представлена в виде карты значений (название столбца в нижнем регистре и его значение).
-     * @throws SQLException если возникает ошибка при выполнении запроса или работе с базой данных.
-     */
     public List<Map<String, Object>> executeQuery(String query, Object... parameters) throws SQLException {
-        validateConnection();
+        ensureConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             for (int i = 0; i < parameters.length; i++) {
-                preparedStatement.setObject(i + 1, parameters[i]); // Индексы начинаются с 1
+                preparedStatement.setObject(i + 1, parameters[i]);
             }
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -134,12 +121,19 @@ public class DatabaseHelper {
         }
     }
 
-    private void validateConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
-            throw new SQLException("Соединение с базой данных закрыто!");
+    /**
+     * Реализация паттерна Singleton с использованием метода Билла Пью.
+     * Вложенный статический класс обеспечивает ленивую загрузку.
+     */
+    private static class DatabaseHelperHolder {
+        private static final DatabaseHelper INSTANCE = new DatabaseHelper();
+
+        static {
+            try {
+                Class.forName(Config.getDbDriver()); // Загружаем драйвер при старте
+            } catch (ClassNotFoundException e) {
+                throw new ExceptionInInitializerError("Ошибка загрузки драйвера базы данных: " + e.getMessage());
+            }
         }
     }
-
 }
-
-

@@ -14,11 +14,13 @@ import java.util.Map;
  */
 public class BookCatalogDao extends BaseDao<BookCatalog, Integer> {
 
-    public final String TABLE_NAME = "book_catalog";
+    private final String TABLE_NAME = "book_catalog";
+    private final String ID_FIELD_NAME = "book_id";
+
 
     @Override
     public BookCatalog findById(Integer id) throws SQLException {
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE book_id = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + ID_FIELD_NAME + " = ?";
         List<Map<String, Object>> results = databaseHelper.executeQuery(query, id);
 
         if (!results.isEmpty()) {
@@ -57,7 +59,7 @@ public class BookCatalogDao extends BaseDao<BookCatalog, Integer> {
     @Override
     public void save(BookCatalog entity) throws SQLException {
         if (entity.getBookId() == null) {
-            entity.setBookId(getNextAutoIncrementValue(TABLE_NAME));
+            entity.setBookId(getNextAutoIncrementValue());
         }
         String query = "INSERT INTO " + TABLE_NAME + " (book_id, title, author_id, price) VALUES (?, ?, ?, ?)";
         databaseHelper.executeUpdate(query, entity.getBookId(), entity.getTitle(), entity.getAuthor().getAuthorId(), entity.getPrice());
@@ -65,13 +67,13 @@ public class BookCatalogDao extends BaseDao<BookCatalog, Integer> {
 
     @Override
     public void update(BookCatalog entity) throws SQLException {
-        String query = "UPDATE " + TABLE_NAME + " SET title = ?, author_id = ?, price = ? WHERE book_id = ?";
+        String query = "UPDATE " + TABLE_NAME + " SET title = ?, author_id = ?, price = ? WHERE " + ID_FIELD_NAME + " = ?";
         databaseHelper.executeUpdate(query, entity.getTitle(), entity.getAuthor().getAuthorId(), entity.getPrice(), entity.getBookId());
     }
 
     @Override
     public void deleteById(Integer id) throws SQLException {
-        String query = "DELETE FROM " + TABLE_NAME + " WHERE book_id = ?";
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE " + ID_FIELD_NAME + " = ?";
         databaseHelper.executeUpdate(query, id);
     }
 
@@ -88,5 +90,10 @@ public class BookCatalogDao extends BaseDao<BookCatalog, Integer> {
     @Override
     public String getTableName() {
         return TABLE_NAME;
+    }
+
+    @Override
+    public String getIdFieldName() {
+        return ID_FIELD_NAME;
     }
 }

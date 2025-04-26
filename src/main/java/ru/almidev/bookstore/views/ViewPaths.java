@@ -12,6 +12,7 @@ public class ViewPaths {
     public static final String BASE_JSP = Config.getViewPath().concat("base.jsp");
     public static final String DEFAULT_JSP = Config.getViewPath().concat("default.jsp");
     public static final String INDEX_JSP = Config.getViewPath().concat("index.jsp");
+    public static final String ERROR_JSP = Config.getViewPath().concat("error.jsp");
 
     private ViewPaths() {
 

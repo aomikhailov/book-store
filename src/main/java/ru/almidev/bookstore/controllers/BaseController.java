@@ -5,17 +5,23 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.almidev.bookstore.config.Config;
+import ru.almidev.bookstore.models.UserSession;
+import ru.almidev.bookstore.services.BookstoreService;
+import ru.almidev.bookstore.services.SessionManagerService;
 
 import static ru.almidev.bookstore.attributes.AttributeNames.*;
 import static ru.almidev.bookstore.views.ViewPaths.*;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class BaseController extends HttpServlet {
 
     private final Map<String, Object> defaultAttributes;
+   // protected final BookstoreService bookstoreService;
 
     /**
      * Конструктор базового контроллера. Инициализирует карту атрибутов по умолчанию,
@@ -25,7 +31,10 @@ public class BaseController extends HttpServlet {
         defaultAttributes = new HashMap<>();
         defaultAttributes.put(PAGE_TITLE, Config.getAppName());
         defaultAttributes.put(PAGE_HEAD, Config.getAppName());
+        defaultAttributes.put(LOGGED_USER_SESSION, new UserSession());
+        defaultAttributes.put(UNLOGGED_USERS_SESSIONS, Collections.emptyList());
         defaultAttributes.put(CONTENT_TEMPLATE, Config.getViewPath().concat(DEFAULT_JSP));
+       // bookstoreService = new BookstoreService();
     }
 
     /**
@@ -40,6 +49,7 @@ public class BaseController extends HttpServlet {
     protected void renderView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processHeadAttribute(req);
         setMissingDefaultAttributes(req);
+       // processSession(req,resp);
         req.getRequestDispatcher(BASE_JSP).forward(req, resp);
     }
 
@@ -71,5 +81,16 @@ public class BaseController extends HttpServlet {
             }
         }
     }
+
+//    private void processSession(HttpServletRequest req, HttpServletResponse resp) {
+//        SessionManagerService sms = new SessionManagerService( req,  resp);
+//        UserSession session = sms.getUserSession();
+//        if (session != null) {
+//            req.setAttribute(USER, session.getUser());
+//        }
+//        else{
+//            req.setAttribute(USER, "Ошибка");
+//        }
+//    }
 
 }

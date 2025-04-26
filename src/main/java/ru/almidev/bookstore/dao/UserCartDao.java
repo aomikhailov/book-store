@@ -15,11 +15,12 @@ import java.util.Map;
  */
 public class UserCartDao extends BaseDao<UserCart, Integer> {
 
-    public final String TABLE_NAME = "user_cart";
+    private final String TABLE_NAME = "user_cart";
+    private final String ID_FIELD_NAME = "item_id";
 
     @Override
     public UserCart findById(Integer id) throws SQLException {
-        String query = "SELECT * FROM " + TABLE_NAME + " WHERE item_id = ?";
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE " + ID_FIELD_NAME + " = ?";
         List<Map<String, Object>> results = databaseHelper.executeQuery(query, id);
         if (results.isEmpty()) {
             return null;
@@ -55,7 +56,7 @@ public class UserCartDao extends BaseDao<UserCart, Integer> {
     @Override
     public void save(UserCart entity) throws SQLException {
         if (entity.getItemId() == null) {
-            entity.setItemId(getNextAutoIncrementValue(TABLE_NAME));
+            entity.setItemId(getNextAutoIncrementValue());
         }
         String query = "INSERT INTO " + TABLE_NAME + " (item_id, user_id, book_id, book_quantity) VALUES (?, ?, ?, ?)";
         databaseHelper.executeUpdate(query, entity.getItemId(), entity.getUser().getUserId(), entity.getBook().getBookId(), entity.getBookQuantity());
@@ -63,13 +64,13 @@ public class UserCartDao extends BaseDao<UserCart, Integer> {
 
     @Override
     public void update(UserCart entity) throws SQLException {
-        String query = "UPDATE " + TABLE_NAME + " SET user_id = ?, book_id = ?, book_quantity = ? WHERE item_id = ?";
+        String query = "UPDATE " + TABLE_NAME + " SET user_id = ?, book_id = ?, book_quantity = ? WHERE " + ID_FIELD_NAME + " = ?";
         databaseHelper.executeUpdate(query, entity.getUser().getUserId(), entity.getBook().getBookId(), entity.getBookQuantity(), entity.getItemId());
     }
 
     @Override
     public void deleteById(Integer id) throws SQLException {
-        String query = "DELETE FROM " + TABLE_NAME + " WHERE item_id = ?";
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE " + ID_FIELD_NAME + " = ?";
         databaseHelper.executeUpdate(query, id);
     }
 
@@ -87,5 +88,10 @@ public class UserCartDao extends BaseDao<UserCart, Integer> {
     @Override
     public String getTableName() {
         return TABLE_NAME;
+    }
+
+    @Override
+    public String getIdFieldName() {
+        return ID_FIELD_NAME;
     }
 }

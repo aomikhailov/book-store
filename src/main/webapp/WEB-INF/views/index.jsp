@@ -22,7 +22,7 @@
                     <td class="text-center w-50px">${book.bookId} </td>
                     <td class="text-left">${book.title}</td>
                     <td class="text-left">${book.author.fio}</td>
-                    <td class="text-right w-100px">${book.price} руб. </td>
+                    <td class="text-right w-100px">${book.price} руб.</td>
                     <td class="text-center w-100px">Купить</td>
                 </tr>
             </c:forEach>

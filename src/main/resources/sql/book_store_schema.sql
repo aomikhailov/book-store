@@ -18,7 +18,7 @@ CREATE TABLE user_session
 (
     session_id     INT AUTO_INCREMENT PRIMARY KEY,
     user_id        INT NOT NULL,
-    session_token  CHAR(64) NOT NULL UNIQUE,
+    session_token  VARCHAR(64) NOT NULL UNIQUE,
     created_on     TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     expires_on     TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES app_user (user_id)
@@ -61,10 +61,11 @@ INSERT INTO app_user (full_name)
 VALUES ('Иван Иванов'),
        ('Мария Петрова');
 
+
 -- Пример сессий
 INSERT INTO user_session (user_id, session_token, expires_on)
-VALUES (1, 'abc1234567890abcdef1234567890abcdef1234567890abcdef1234567890ab', DATEADD('MINUTE', 10, CURRENT_TIMESTAMP)),
-    (2, 'def9876543210fedcba9876543210fedcba9876543210fedcba9876543210de', DATEADD('MINUTE', 10, CURRENT_TIMESTAMP));
+VALUES (1, '0479AA88-6902-495A-AD0A-E827CE5965DA', DATEADD('MINUTE', 10, CURRENT_TIMESTAMP)),
+    (2, '7BECE848-910D-405F-A57D-1DFBFC218FF1', DATEADD('MINUTE', 10, CURRENT_TIMESTAMP));
 
 -- Данные авторов
 INSERT INTO book_author (first_name, middle_name, last_name, birth_date)

@@ -16,4 +16,5 @@ public interface GenericDao<T, ID> {
     void update(T entity) throws SQLException;
     void deleteById(ID id) throws SQLException;
     String getTableName();
+    String getIdFieldName();
 }
