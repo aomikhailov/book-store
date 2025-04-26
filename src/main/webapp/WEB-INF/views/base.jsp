@@ -11,7 +11,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><c:out value="${pageTitle}"/></title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/includes/css/main.css">
 </head>
 <body class="w3-container">
 <h1><c:out value="${pageHead}"/></h1>

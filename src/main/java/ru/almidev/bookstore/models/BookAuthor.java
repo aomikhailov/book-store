@@ -49,6 +49,14 @@ public class BookAuthor {
         return middleName;
     }
 
+    public String getFio() {
+        return String.join(" ",
+                lastName == null || lastName.isEmpty() ? "" : lastName,
+                firstName == null || firstName.isEmpty() ? "" : firstName,
+                middleName == null || middleName.isEmpty() ? "" : middleName
+        ).trim();
+    }
+
     public void setMiddleName(String middleName) {
         this.middleName = middleName;
     }
