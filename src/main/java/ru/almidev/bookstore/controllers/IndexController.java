@@ -24,7 +24,6 @@ public class IndexController extends BaseController {
         req.setAttribute(HEAD, "Главная страница");
         req.setAttribute(BOOK_CATALOG_LIST, bookCatalogList);
         req.setAttribute(CONTENT_TEMPLATE, INDEX_JSP);
-
         renderView(req, resp);
     }
 }

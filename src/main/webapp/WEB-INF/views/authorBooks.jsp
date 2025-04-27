@@ -4,7 +4,7 @@
 
 <jsp:include page="menu.jsp" />
 
-<h2>Книги автора \"${authorFio}\"</h2>
+<h2>Книги автора "${authorFio}"</h2>
 
 <jsp:include page="booksList.jsp" />
 

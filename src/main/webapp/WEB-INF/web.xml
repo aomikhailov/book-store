@@ -10,8 +10,13 @@
     <servlet>
         <servlet-name>default</servlet-name>
         <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+        <init-param>
+            <param-name>useAcceptRanges</param-name>
+            <param-value>false</param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
+
 
     <servlet-mapping>
         <servlet-name>default</servlet-name>
@@ -20,6 +25,16 @@
 
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>
+        <location>/error</location>
+    </error-page>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error</location>
+    </error-page>
+
+    <error-page>
+        <error-code>500</error-code>
         <location>/error</location>
     </error-page>
 

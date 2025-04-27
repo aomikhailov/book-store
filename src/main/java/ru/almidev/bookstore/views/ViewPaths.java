@@ -15,6 +15,7 @@ public class ViewPaths {
     public static final String ERROR_JSP = Config.getViewPath().concat("error.jsp");
     public static final String AUTHORS_JSP = Config.getViewPath().concat("authors.jsp");
     public static final String AUTHOR_BOOKS_JSP = Config.getViewPath().concat("authorBooks.jsp");
+    public static final String USER_CART_JSP = Config.getViewPath().concat("userCart.jsp");
 
     private ViewPaths() {
 

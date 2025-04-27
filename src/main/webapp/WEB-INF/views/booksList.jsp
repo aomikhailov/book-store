@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+
 <jsp:useBean id="bookCatalogList" scope="request" type="java.util.List"/>
 
 <c:choose>
@@ -18,7 +20,7 @@
                     <td class="text-center w-50px">${status.index + 1}</td>
                     <td class="text-left">${book.title}</td>
                     <td class="text-left">${book.author.fio}</td>
-                    <td class="text-center w-150px">${book.price} руб.</td>
+                    <td class="text-center w-150px"><fmt:formatNumber value="${book.price}" type="number" minFractionDigits="2" maxFractionDigits="2" /> руб.</td>
                     <td class="text-center w-150px">Купить</td>
                 </tr>
             </c:forEach>

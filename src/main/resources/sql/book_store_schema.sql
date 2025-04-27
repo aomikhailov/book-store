@@ -10,6 +10,8 @@ CREATE TABLE app_user
 (
     user_id    INT AUTO_INCREMENT PRIMARY KEY,
     full_name  VARCHAR(255),
+    login  VARCHAR(255) NOT NULL UNIQUE,
+    password  VARCHAR(255) NOT NULL,
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -57,9 +59,9 @@ CREATE TABLE user_cart
 );
 
 -- Данные пользователей
-INSERT INTO app_user (full_name)
-VALUES ('Иван Иванов'),
-       ('Мария Петрова');
+INSERT INTO app_user (full_name,login,password)
+VALUES ('Иван Иванов', 'user1','1234567890'),
+       ('Мария Петрова','user2','1234567890');
 
 
 -- Пример сессий

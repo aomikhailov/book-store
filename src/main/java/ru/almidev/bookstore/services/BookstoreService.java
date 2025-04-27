@@ -2,8 +2,11 @@ package ru.almidev.bookstore.services;
 
 import ru.almidev.bookstore.dao.BookAuthorDao;
 import ru.almidev.bookstore.dao.BookCatalogDao;
+import ru.almidev.bookstore.dao.UserCartDao;
+import ru.almidev.bookstore.models.AppUser;
 import ru.almidev.bookstore.models.BookAuthor;
 import ru.almidev.bookstore.models.BookCatalog;
+import ru.almidev.bookstore.models.UserCart;
 
 import java.sql.SQLException;
 import java.util.Collections;
@@ -12,7 +15,8 @@ import java.util.List;
 public class BookstoreService {
 
     private final BookAuthorDao bookAuthorDao = new BookAuthorDao();
-    private final  BookCatalogDao bookCatalogDao = new BookCatalogDao();
+    private final BookCatalogDao bookCatalogDao = new BookCatalogDao();
+    private final UserCartDao userCartDao = new UserCartDao();
 
     public List<BookCatalog> findAllBooks() {
          try {
@@ -43,6 +47,14 @@ public class BookstoreService {
             return bookAuthorDao.findById(AuthorId);
         } catch (SQLException e) {
             return null;
+        }
+    }
+
+    public List<UserCart> findAllUserCartByAppUser(AppUser appUser) {
+        try {
+            return userCartDao.findAllByAppUser(appUser);
+        } catch (SQLException e) {
+            return Collections.emptyList();
         }
     }
 }

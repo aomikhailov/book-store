@@ -33,8 +33,7 @@ public class AuthorBooksController extends BaseController {
         }
 
         if (authorNotFound) {
-            resp.sendRedirect(req.getContextPath() + "/");
-            return;
+            throw  new RuntimeException("Запрошены книги не существующего автора.");
         }
 
         req.setAttribute(HEAD, "Книги по авторам");

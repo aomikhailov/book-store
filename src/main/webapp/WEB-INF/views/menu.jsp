@@ -9,7 +9,7 @@
         <strong>Навигация:</strong>
         <a href="${pageContext.request.contextPath}/">Главная</a> |
         <a href="${pageContext.request.contextPath}/authors">Авторы</a> |
-        <a href="${pageContext.request.contextPath}/">Корзина</a>
+        <a href="${pageContext.request.contextPath}/user/cart">Корзина</a>
     </div>
     <div id="session">
           <c:choose>
@@ -17,7 +17,7 @@
                   <strong>Вы вошли как: </strong> ${loggedUserSession.user.fullName}
             </c:when>
             <c:otherwise>
-                Вы гость (у вас нет сессии аутентификации на сайте)
+                <a href="${pageContext.request.contextPath}/user/login">Войти</a>
             </c:otherwise>
 
         </c:choose>

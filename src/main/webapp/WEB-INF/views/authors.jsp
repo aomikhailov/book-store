@@ -5,7 +5,7 @@
 
 <jsp:include page="menu.jsp" />
 
-<h2>Авторы книги которых доступны в нашем магазине</h2>
+<h2>Авторы, книги которых доступны в нашем магазине</h2>
 
 <c:choose>
     <c:when test="${not empty bookAuthorList}">
@@ -16,7 +16,7 @@
                 <th class="text-left">Имя</th>
                 <th class="text-left">Отчество</th>
                 <th class="text-center">Дата рождения</th>
-                <th class="text-center w-100px">Действие</th>
+                <th class="text-center w-150px">Действие</th>
             </tr>
 
             <c:forEach var="author" items="${bookAuthorList}" varStatus="status">

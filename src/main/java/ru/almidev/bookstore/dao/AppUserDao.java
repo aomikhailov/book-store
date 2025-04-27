@@ -45,14 +45,14 @@ public class AppUserDao extends BaseDao<AppUser, Integer> {
         if (entity.getUserId() == null) {
             entity.setUserId(getNextAutoIncrementValue());
         }
-        String query = "INSERT INTO " + TABLE_NAME + " (user_id, full_name, created_on) VALUES (?, ?, ?)";
-        databaseHelper.executeUpdate(query, entity.getFullName(), entity.getCreatedOn());
+        String query = "INSERT INTO " + TABLE_NAME + " (user_id, full_name, login, password, created_on) VALUES (?, ?, ?)";
+        databaseHelper.executeUpdate(query, entity.getFullName(), entity.getLogin(), entity.getPassword(), entity.getCreatedOn());
     }
 
     @Override
     public void update(AppUser entity) throws SQLException {
-        String query = "UPDATE " + TABLE_NAME + " SET full_name = ?, created_on = ? WHERE " + ID_FIELD_NAME + " = ?";
-        databaseHelper.executeUpdate(query, entity.getFullName(), entity.getCreatedOn(), entity.getUserId());
+        String query = "UPDATE " + TABLE_NAME + " SET full_name = ?, login = ?, password = ?, created_on = ? WHERE " + ID_FIELD_NAME + " = ?";
+        databaseHelper.executeUpdate(query, entity.getFullName(), entity.getLogin(), entity.getPassword(), entity.getCreatedOn(), entity.getUserId());
     }
 
     @Override
@@ -65,6 +65,8 @@ public class AppUserDao extends BaseDao<AppUser, Integer> {
         AppUser user = new AppUser();
         user.setUserId((Integer) row.get("user_id"));
         user.setFullName((String) row.get("full_name"));
+        user.setLogin((String) row.get("login"));
+        user.setPassword((String) row.get("password"));
         user.setCreatedOn(((Timestamp) row.get("created_on")).toLocalDateTime());
         return user;
     }

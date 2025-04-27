@@ -48,7 +48,6 @@ public class BaseController extends HttpServlet {
     protected void renderView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processHeadAttribute(req);
         setMissingDefaultAttributes(req);
-        // processSession(req,resp);
         req.getRequestDispatcher(BASE_JSP).forward(req, resp);
     }
 
