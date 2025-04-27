@@ -28,16 +28,26 @@
                     <td class="text-left">${item.book.author.fio}</td>
                     <td class="text-center">${item.bookQuantity}</td>
                     <td class="text-center w-150px"><fmt:formatNumber value="${rowSum}" type="number" minFractionDigits="2" maxFractionDigits="2" /> руб.</td>
-                    <td class="text-center w-100px">Добавить</td>
-                    <td class="text-center w-100px">Удалить</td>
+                    <td class="text-center w-100px">
+                        <form action="${pageContext.request.contextPath}/user/cart" method="post" style="display:inline;">
+                            <input type="hidden" name="action" value="add" />
+                            <input type="hidden" name="id" value="${item.book.bookId}" />
+                            <button type="submit">Добавить</button>
+                        </form>
+                    </td>
+                    <td class="text-center w-100px">
+                        <form action="${pageContext.request.contextPath}/user/cart" method="post" style="display:inline;">
+                            <input type="hidden" name="action" value="del" />
+                            <input type="hidden" name="id" value="${item.book.bookId}" />
+                            <button type="submit">Удалить</button>
+                        </form>
+                   </td>
                 </tr>
             </c:forEach>
-
             <tr>
-                <td colspan="4" class="text-right font-weight-bold">Итого:</td>
-                <td class="text-center w-150px font-weight-bold">${totalSum} руб.</td>
+                <td colspan="4" class="text-left font-weight-bold">Итого:</td>
+                <td class="text-center w-150px font-weight-bold"><fmt:formatNumber value="${totalSum}" type="number" minFractionDigits="2" maxFractionDigits="2" /> руб.</td>
             </tr>
-
         </table>
     </c:when>
     <c:otherwise>

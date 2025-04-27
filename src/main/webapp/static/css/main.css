@@ -124,3 +124,19 @@ td, th {
 .clear {
     clear: both;
 }
+
+td.font-weight-bold,
+.font-weight-bold{
+    font-weight: bold!important;
+}
+
+.text-danger {
+    color: #dc3545!important;
+}
+
+.text-success {
+    color: #28a745!important;
+}
+.text-large {
+    font-size: 1.2em;
+}

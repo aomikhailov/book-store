@@ -53,6 +53,21 @@ public class UserCartDao extends BaseDao<UserCart, Integer> {
         return findAllByAppUser(appUser.getUserId());
     }
 
+    public UserCart findByAppUserAndBookCatalog(AppUser appUser, BookCatalog bookCatalog) throws SQLException {
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE user_id = ? AND book_id = ?";
+        List<Map<String, Object>> results = databaseHelper.executeQuery(query, appUser.getUserId(), bookCatalog.getBookId());
+        if (results.isEmpty()) {
+            return null;
+        }
+        return mapRowToUserCart(results.getFirst());
+    }
+
+    public int countByAppUserAndBookCatalog(AppUser appUser, BookCatalog bookCatalog) throws SQLException {
+        String query = "SELECT COUNT(*) AS CNT FROM " + TABLE_NAME + " WHERE user_id = ? AND book_id = ?";
+        List<Map<String, Object>> results = databaseHelper.executeQuery(query, appUser.getUserId(), bookCatalog.getBookId());
+        return (int) results.getFirst().get("cnt");
+    }
+
     @Override
     public void save(UserCart entity) throws SQLException {
         if (entity.getItemId() == null) {

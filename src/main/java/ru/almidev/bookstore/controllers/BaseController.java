@@ -30,9 +30,19 @@ public class BaseController extends HttpServlet {
         defaultAttributes = new HashMap<>();
         defaultAttributes.put(PAGE_TITLE, Config.getAppName());
         defaultAttributes.put(PAGE_HEAD, Config.getAppName());
+        defaultAttributes.put(CONTENT_TEMPLATE, DEFAULT_JSP);
+        defaultAttributes.put(HEAD, "");
+        defaultAttributes.put(BOOK_CATALOG_LIST, Collections.emptyList());
+        defaultAttributes.put(BOOK_AUTHOR_LIST, Collections.emptyList());
+        defaultAttributes.put(AUTHOR_FIO, "");
+        defaultAttributes.put(USER_FULL_NAME, "");
+        defaultAttributes.put(USER_CART_LIST, Collections.emptyList());
+        defaultAttributes.put(USER_CART_ACTION_RESULT, "");
+        defaultAttributes.put(USER_CART_ACTION_ERROR, 0);
         defaultAttributes.put(LOGGED_USER_SESSION, new UserSession());
         defaultAttributes.put(UNLOGGED_USERS_SESSIONS, Collections.emptyList());
-        defaultAttributes.put(CONTENT_TEMPLATE, DEFAULT_JSP);
+        defaultAttributes.put(ERROR_CODE, 0);
+        defaultAttributes.put(ERROR_MESSAGE, "");
         bookstoreService = new BookstoreService();
     }
 

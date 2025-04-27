@@ -21,7 +21,13 @@
                     <td class="text-left">${book.title}</td>
                     <td class="text-left">${book.author.fio}</td>
                     <td class="text-center w-150px"><fmt:formatNumber value="${book.price}" type="number" minFractionDigits="2" maxFractionDigits="2" /> руб.</td>
-                    <td class="text-center w-150px">Купить</td>
+                    <td class="text-center w-150px">
+                        <form action="${pageContext.request.contextPath}/user/cart" method="post" style="display:inline;">
+                            <input type="hidden" name="action" value="add" />
+                            <input type="hidden" name="id" value="${book.bookId}" />
+                            <button type="submit">Купить</button>
+                        </form>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
