@@ -140,3 +140,38 @@ td.font-weight-bold,
 .text-large {
     font-size: 1.2em;
 }
+
+.text-bold {
+    font-weight: bold;
+}
+
+label {
+    display: inline-block;
+    width: 75px;
+    font-weight: bold;
+}
+
+input, label {
+    height: 16px;
+    padding: 5px;
+}
+
+button, .btn {
+    background-color: #e6e6e6;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px 9px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    text-decoration: none;
+}
+
+button:hover, .btn:hover {
+    background-color: #d9d9d9;
+    border-color: #adadad;
+}
+

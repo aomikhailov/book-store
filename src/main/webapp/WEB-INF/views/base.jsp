@@ -25,5 +25,6 @@
         <p>Ошибка: ${contentTemplateIncludeError.message}</p>
     </c:if>
 </c:if>
+
 </body>
 </html>

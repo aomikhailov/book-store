@@ -28,6 +28,17 @@ public class AppUserDao extends BaseDao<AppUser, Integer> {
         return null;
     }
 
+
+    public AppUser findByLogin(String login) throws SQLException {
+        String query = "SELECT * FROM " + TABLE_NAME + " WHERE login = ?";
+        List<Map<String, Object>> results = databaseHelper.executeQuery(query, login);
+
+        if (!results.isEmpty()) {
+            return mapRowToAppUser(results.getFirst());
+        }
+        return null;
+    }
+
     @Override
     public List<AppUser> findAll() throws SQLException {
         String query = "SELECT * FROM " + TABLE_NAME;

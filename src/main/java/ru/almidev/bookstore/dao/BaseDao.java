@@ -29,6 +29,9 @@ public abstract class BaseDao<T, ID> implements GenericDao<T, ID> {
             if (autoIncrementValue != null) {
                 return ((Number) autoIncrementValue).intValue();
             }
+            else{
+                return 1;
+            }
         }
 
         throw new IllegalStateException("Не удалось получить значение AUTO_INCREMENT для поля " + idFieldName + " таблицы: " + upperCaseTableName);

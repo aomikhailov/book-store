@@ -40,11 +40,13 @@ public class BaseController extends HttpServlet {
         defaultAttributes.put(USER_CART_ACTION_RESULT, "");
         defaultAttributes.put(USER_CART_ACTION_ERROR, 0);
         defaultAttributes.put(LOGGED_USER_SESSION, new UserSession());
-        defaultAttributes.put(UNLOGGED_USERS_SESSIONS, Collections.emptyList());
         defaultAttributes.put(ERROR_CODE, 0);
         defaultAttributes.put(ERROR_MESSAGE, "");
+        defaultAttributes.put(USER_LOGIN_RESULT, "");
+        defaultAttributes.put(USER_LOGIN_ERROR, 0);
         bookstoreService = new BookstoreService();
     }
+
 
     /**
      * Рендерит представление для текущего запроса, устанавливая недостающие

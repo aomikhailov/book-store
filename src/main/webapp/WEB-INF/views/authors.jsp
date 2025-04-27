@@ -28,7 +28,7 @@
                     <td class="text-center">
                         <fmt:formatDate value="${author.birthDate}" pattern="dd.MM.yyyy" />
                     </td>
-                    <td class="text-center w-150px"><a href="${pageContext.request.contextPath}/author/books?id=${author.authorId}">Книги автора</a></td>
+                    <td class="text-center w-150px"><a class="btn" href="${pageContext.request.contextPath}/author/books?id=${author.authorId}">Книги автора</a></td>
                 </tr>
             </c:forEach>
         </table>

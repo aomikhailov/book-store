@@ -60,8 +60,8 @@ CREATE TABLE user_cart
 
 -- Данные пользователей
 INSERT INTO app_user (full_name,login,password)
-VALUES ('Иван Иванов', 'user1','1234567890'),
-       ('Мария Петрова','user2','1234567890');
+VALUES ('Иван Иванов', 'user1','E807F1FCF82D132F9BB018CA6738A19F'),
+       ('Мария Петрова','user2','E807F1FCF82D132F9BB018CA6738A19F');
 
 
 -- Пример сессий

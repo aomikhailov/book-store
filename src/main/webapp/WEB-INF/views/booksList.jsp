@@ -33,6 +33,6 @@
         </table>
     </c:when>
     <c:otherwise>
-        <p>Список книг пуст.</p>
+        <p>Список книг пуст. </p>
     </c:otherwise>
 </c:choose>

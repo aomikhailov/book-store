@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import ru.almidev.bookstore.enums.UserCartActionEnum;
 import ru.almidev.bookstore.models.AppUser;
 import ru.almidev.bookstore.models.BookCatalog;
+import ru.almidev.bookstore.models.UserSession;
 import ru.almidev.bookstore.services.SessionManagerService;
 import ru.almidev.bookstore.services.UserCartService;
 
@@ -18,11 +19,11 @@ import static ru.almidev.bookstore.views.ViewPaths.USER_CART_JSP;
 @WebServlet("/user/cart")
 public class UserCartController extends BaseController {
 
-//    Только для отладки
-//    @Override
-//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        processRequest(req, resp);
-//    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        processRequest(req, resp);
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,11 +35,16 @@ public class UserCartController extends BaseController {
      */
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SessionManagerService sessionManagerService = new SessionManagerService(req, resp);
-        AppUser appUser = sessionManagerService.getLoggedUserSession().getUser();
+        UserSession userSession = sessionManagerService.getLoggedUserSession();
 
-        if (appUser == null) {
-            throw new RuntimeException("Этот раздел сайта предназначен только для авторизованных пользователей.");
+        if (userSession == null ) {
+            resp.sendRedirect(req.getContextPath() + "/user/login");
+            return;
+
         }
+
+        AppUser appUser = userSession.getUser();
+
 
         UserCartService userCartService = new UserCartService(req, appUser);
         UserCartActionEnum action = userCartService.getUserCartActionFromHttpRequest();

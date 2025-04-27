@@ -51,6 +51,6 @@
         </table>
     </c:when>
     <c:otherwise>
-        <p>Ваша корзина пуста.</p>
+        <p>Ваша корзина пуста. Подберите себе что-нибудь в нашем <a href="${pageContext.request.contextPath}/catalog">каталоге</a>.</p>
     </c:otherwise>
 </c:choose>
