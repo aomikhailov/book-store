@@ -12,11 +12,10 @@
 
     <groupId>ru.almidev</groupId>
     <artifactId>BookStore</artifactId>
-    <version>1.0.5-SNAPSHOT</version>
+    <version>1.0.7-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <dependencies>
-
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
@@ -74,13 +73,6 @@
 
         <!-- Транзитивная зависимость непонятно для org.mariadb.jdbc -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.36</version>
-        </dependency>
-
-        <!-- Транзитивная зависимость непонятно для org.mariadb.jdbc -->
-        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.4.11</version>
@@ -88,32 +80,22 @@
     </dependencies>
 
     <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.3.1</version>
-                <executions>
-                    <execution>
-                        <id>copy-war</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.basedir}/deployment/uploads</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${project.build.directory}</directory>
-                                    <includes>
-                                        <include>*.war</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
+        <!--  Расширение, реализующее деплоймент по FTP -->
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ftp</artifactId>
+                <version>3.5.3</version>
+            </extension>
+        </extensions>
     </build>
+
+    <!-- Настройка загрузки артефактов по FTP при выполнении mvn deploy -->
+    <distributionManagement>
+        <repository>
+            <id>bookstore-ftp</id>
+            <url>ftp://bookstore.test.almidev.ru/private/deployment/uploads</url>
+        </repository>
+    </distributionManagement>
 
 </project>
