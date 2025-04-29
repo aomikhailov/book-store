@@ -18,9 +18,9 @@ public abstract class BaseDao<T, ID> implements GenericDao<T, ID> {
     public Integer getNextAutoIncrementValue() throws SQLException {
 
         // Приведение имени таблицы к верхнему регистру, чтобы соответствовать H2
-        String upperCaseTableName = getTableName().toUpperCase();
-        String idFieldName = getIdFieldName().toUpperCase();
-        String query = "select max(" + idFieldName + ")+1 as next_auto_increment_value from " + upperCaseTableName;
+        String tableName = getTableName();
+        String idFieldName = getIdFieldName();
+        String query = "select max(" + idFieldName + ")+1 as next_auto_increment_value from " + tableName;
 
         List<Map<String, Object>> results = databaseHelper.executeQuery(query);
 
@@ -34,7 +34,7 @@ public abstract class BaseDao<T, ID> implements GenericDao<T, ID> {
             }
         }
 
-        throw new IllegalStateException("Не удалось получить значение AUTO_INCREMENT для поля " + idFieldName + " таблицы: " + upperCaseTableName);
+        throw new IllegalStateException("Не удалось получить значение AUTO_INCREMENT для поля " + idFieldName + " таблицы: " + tableName);
     }
 
 

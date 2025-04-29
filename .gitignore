@@ -30,7 +30,7 @@ desktop.ini
 /target/
 /build/
 /out/
-/deploy/
+/deployment/
 /mvn/
 .gradle/
 *.class

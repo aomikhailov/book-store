@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS book_catalog;
 DROP TABLE IF EXISTS book_author;
 DROP TABLE IF EXISTS app_user;
 
--- Таблица пользователей (только ID)
+-- Таблица пользователей
 CREATE TABLE app_user
 (
     user_id    INT AUTO_INCREMENT PRIMARY KEY,
@@ -25,7 +25,6 @@ CREATE TABLE user_session
     expires_on     TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES app_user (user_id)
 );
-
 
 -- Таблица авторов книг
 CREATE TABLE book_author
@@ -63,11 +62,10 @@ INSERT INTO app_user (full_name,login,password)
 VALUES ('Иван Иванов', 'user1','E807F1FCF82D132F9BB018CA6738A19F'),
        ('Мария Петрова','user2','E807F1FCF82D132F9BB018CA6738A19F');
 
-
 -- Пример сессий
 INSERT INTO user_session (user_id, session_token, expires_on)
-VALUES (1, '0479AA88-6902-495A-AD0A-E827CE5965DA', DATEADD('MINUTE', 10, CURRENT_TIMESTAMP)),
-    (2, '7BECE848-910D-405F-A57D-1DFBFC218FF1', DATEADD('MINUTE', 10, CURRENT_TIMESTAMP));
+VALUES (1, '0479AA88-6902-495A-AD0A-E827CE5965DA', DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 10 MINUTE)),
+       (2, '7BECE848-910D-405F-A57D-1DFBFC218FF1', DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 10 MINUTE));
 
 -- Данные авторов
 INSERT INTO book_author (first_name, middle_name, last_name, birth_date)

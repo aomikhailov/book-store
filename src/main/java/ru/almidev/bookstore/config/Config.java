@@ -29,13 +29,11 @@ public class Config {
     }
 
     public static String getDbUser() {
-       // return dotenv.get("DB_USER");
-        return "test";
+       return dotenv.get("DB_USER");
     }
 
     public static String getDbPassword() {
-        // return dotenv.get("DB_PASSWORD");
-        return "test";
+        return dotenv.get("DB_PASSWORD");
     }
 
     public static String getViewPath() {
