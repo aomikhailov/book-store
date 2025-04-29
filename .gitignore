@@ -51,3 +51,6 @@ desktop.ini
 /test-results/
 /reports/
 /main/test
+
+# Скрытое от гита
+/tools
