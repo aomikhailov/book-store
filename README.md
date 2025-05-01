@@ -46,7 +46,7 @@
 
 ### Использование Docker-образа
 
-Для развёртывания приложения использовался Docker-образ **almihub/tomcat11-jdk23**, который можно найти в моём профиле на [Docker Hub](https://hub.docker.com/u/almihub).  
+Для развёртывания приложения использовался Docker-образ [almihub/tomcat11-jdk23](https://hub.docker.com/r/almihub/tomcat11-jdk23), который можно найти в моём профиле на [Docker Hub](https://hub.docker.com/u/almihub).  
 Для автоматизации процесса создания и публикации Docker-образа под ваши условия можно использовать мой скрипт [Dockerhub Publisher](https://github.com/aomikhailov/dockerhub-publisher), доступный на [GitHub](https://github.com/aomikhailov/).
 
 ## Дата создания
